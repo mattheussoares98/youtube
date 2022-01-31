@@ -6,10 +6,12 @@ import 'package:youtube/utils/youtube_utils.dart';
 import 'package:http/http.dart' as http;
 
 class YoutubeProvider extends ChangeNotifier {
-  searchVideo(String search) async {
+  Future<List<Video>> searchVideo({String? search}) async {
     String _baseUrl = YoutubeUtils.youtubeUrlBase;
     String _channelId = YoutubeUtils.youtubeIdChannel;
     String _apiKey = YoutubeUtils.youtubeApiKey;
+
+    List<Video> listVideos = [];
 
     try {
       http.Response response = await http.get(
@@ -20,8 +22,6 @@ class YoutubeProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         Map responseInMap = json.decode(response.body);
-
-        print(responseInMap['items'][0] is Map);
 
         //poderia ter feito usando um "for" para percorrer cada item da lista
         //e converter em um List<Video>. Porém, ia gastar muito mais memória
@@ -34,16 +34,18 @@ class YoutubeProvider extends ChangeNotifier {
           },
         ).toList();
 
-        print(videos[0].titulo);
+        listVideos = videos;
       } else {
         print('erro para consultar os vídeos');
-        print(response.statusCode);
         print(response.reasonPhrase);
+        print(response.body);
       }
     } catch (e) {
       print('Erro para realizar a consulta: $e');
 
       e;
     } finally {}
+
+    return listVideos;
   }
 }

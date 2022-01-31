@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube/pages/home_page.dart';
 import 'package:youtube/providers/youtube_provider.dart';
+import 'package:youtube/utils/app_routes.dart';
 
 void main() {
   runApp(
@@ -9,10 +10,14 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => YoutubeProvider()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        initialRoute: APPROUTES.HOME,
+        routes: {
+          APPROUTES.HOME: (ctx) => const HomePage(),
+        },
       ),
     ),
   );
 }
+//Map<String, Widget Function(BuildContext)>

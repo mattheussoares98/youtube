@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:youtube/models/custom_search_delegate.dart';
 import 'package:youtube/pages/biblioteca_bar.dart';
 import 'package:youtube/pages/em_alta_bar.dart';
 import 'package:youtube/pages/home_bar.dart';
@@ -48,10 +49,15 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.notifications_none),
           ),
           IconButton(
-            onPressed: () {
-              youtubeProvider.searchVideo('mattheus soares zagueiro');
-            },
             icon: const Icon(Icons.search),
+            onPressed: () async {
+              // youtubeProvider.searchVideo(search: 'mattheus soares zagueiro');
+              String res = await showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+              print('resposta = $res');
+            },
           ),
           IconButton(
             onPressed: () {},
@@ -59,7 +65,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: telaAtual[indiceAtual],
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: telaAtual[indiceAtual],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         fixedColor: Colors.black, //cor do texto de cada NavigationBarItem
         selectedFontSize: 13,
