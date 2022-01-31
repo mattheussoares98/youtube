@@ -16,7 +16,7 @@ class CustomSearchDelegate extends SearchDelegate {
       IconButton(
         icon: const Icon(Icons.search),
         onPressed: () {
-          close(context, query == null ? '' : query);
+          close(context, query == '' ? '' : query);
         },
       ),
     ];
@@ -31,7 +31,7 @@ class CustomSearchDelegate extends SearchDelegate {
           //esse método fecha a tela atual e manda pra tela anterior o que
           //for passado como parâmetro
           context,
-          null,
+          query,
         );
       },
       icon: const Icon(
@@ -42,7 +42,6 @@ class CustomSearchDelegate extends SearchDelegate {
 
 //trata o que vai acontecer quando clicarem no ícone de pesquisa (no teclado),
 // já na tela de consulta
-
   @override
   Widget buildResults(BuildContext context) {
     return Container();
