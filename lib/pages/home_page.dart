@@ -17,16 +17,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int indiceAtual = 0;
 
-  List telaAtual = const [
-    HomeBar(),
-    EmAltaBar(),
-    InscricoesBar(),
-    BibliotecaBar(),
-  ];
+  String _search = '';
 
   @override
   Widget build(BuildContext context) {
-    YoutubeProvider youtubeProvider = Provider.of(context, listen: true);
+    List telaAtual = [
+      HomeBar(search: _search),
+      const EmAltaBar(),
+      const InscricoesBar(),
+      const BibliotecaBar(),
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +56,10 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 delegate: CustomSearchDelegate(),
               );
-              print('resposta = $res');
+
+              setState(() {
+                _search = res;
+              });
             },
           ),
           IconButton(
